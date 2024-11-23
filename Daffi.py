@@ -23,11 +23,11 @@ def find_primitive_root(p):
   """Находит примитивный корень простого числа p."""
 
   if p == 2:
-    return 1  # Специальный случай для p = 2
+    return 1  # специальный случай для p = 2
 
   phi = p - 1
   factors = []
-  # Находим все простые делители phi (p - 1)
+  # находим все простые делители phi (p - 1)
   n = 2
   while n * n <= phi:
     if phi % n == 0:
@@ -37,7 +37,7 @@ def find_primitive_root(p):
     n += 1
   if phi > 1:
     factors.append(phi)
-  # Проверяем числа от 2 до p-1
+  # проверяем числа от некоторого до p-1
   for g in range(int(p/10), p-1):
     is_primitive_root = True
     for factor in factors:
@@ -46,7 +46,7 @@ def find_primitive_root(p):
         break
     if is_primitive_root:
       return g
-  return None  # Если не найден примитивный корень, возвращаем None
+  return None  # если не найден примитивный корень, возвращаем None
 
 
 def daffi(p):

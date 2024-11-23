@@ -1,3 +1,6 @@
 import RSA
+import Elips as el
 
-print(RSA.RSAmain(24+19,2,247))
+P = (1,712)
+
+print(el.sum_point(P,P))
