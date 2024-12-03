@@ -1,6 +1,6 @@
 import RSA
 import Elips as el
+import math
+p = 17123
 
-P = (1,712)
-
-print(el.sum_point(P,P))
+print(p + 1 - math.sqrt(p), p + 1 + math.sqrt(p))

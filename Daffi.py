@@ -1,27 +1,7 @@
 import Rabin as rab
 import random
 
-
-# def find_primitive_root(p):
-#     if p == 2:
-#         return 1
-#     phi = p - 1
-#     for g in range(int(p/10), p):
-#         if is_primitive_root(g, p, phi):
-#             return g
-#     return None
-
-
-# def is_primitive_root(g, p, phi):
-#     for i in range(1, phi):
-#         if pow(g, i, p) == 1:
-#             return False
-#     return True
-
-
 def find_primitive_root(p):
-  """Находит примитивный корень простого числа p."""
-
   if p == 2:
     return 1  # специальный случай для p = 2
 

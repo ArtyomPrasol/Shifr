@@ -1,24 +1,24 @@
 import Rabin as r
-
+import math
 
 def sum_point(P, Q, a = 1):
-    if P is None:  # Если P — бесконечно удалённая точка
+    if P is None:
         return Q
-    if Q is None:  # Если Q — бесконечно удалённая точка
+    if Q is None:
         return P
 
     x1, y1 = P
     x2, y2 = Q
 
-    if x1 == x2 and y1 != y2:  # Сложение противоположных точек
-        return None  # Бесконечно удалённая точка
+    if x1 == x2 and y1 != y2:  
+        return None  # бесконечно удалённая точка
 
-    if x1 != x2:  # Сложение точек с разными абсциссами
-        k = (y2 - y1) * pow(x2 - x1, -1)
-    else:  # x1 == x2 и y1 == y2 — удвоение точки
-        if y1 == 0:  # Если точка лежит на оси x, результат — бесконечно удалённая точка
+    if x1 != x2:
+        k = ((y2 - y1) * pow(x2 - x1, -1)) 
+    else:  # x1 == x2 и y1 == y2
+        if y1 == 0:  
             return None
-        k = ((3 * x1**2 + a) * pow(2 * y1, -1))
+        k = ((3 * x1**2 + a) * pow(2 * y1, -1)) 
 
     x3 = (k**2 - x1 - x2) 
     y3 = (k * (x1 - x3) - y1) 
@@ -42,7 +42,7 @@ def find_x_and_root(y, z, delta = 500000):
 
 
 def rabin(p, k = 10):
-    while True:
+    while True: # считаем пока не найдем простое число
         b = int(r.max_pow(p))
         m = int(r.get_m(p,b))
 
@@ -59,6 +59,39 @@ def rabin(p, k = 10):
 
 def func_y(x,a = 1,b = 0):
     return x**3 + a*x + b
+
+
+def elliptic_curve_order(p, a = 1, b = 0):
+    order = 1  # начинаем с точки на бесконечности
+    for x in range(p):
+        rhs = (x**3 + a * x + b) % p
+        count = 0
+        # ищем квадратичные вычеты
+        for y in range(p):
+            if (y * y) % p == rhs:
+                count += 1
+        order += count
+    return order
+
+
+def hasse(c, porder):
+    l = c + 1 - math.sqrt(c) #нижняя граница
+    h = c + 1 + math.sqrt(c) #верхняя граница
+
+    if l <= porder <= h: #проверка теоремы Хассе
+        return True
+    return False
+
+
+def point_order(P):
+    Q = P
+    k = 1 # kP = P
+    while Q is not None:
+        Q = sum_point(Q, P)  # cложение точки с самой собой вместо умножения
+        k += 1
+        if Q is None: 
+            return k
+    return None  
 
 
 if __name__ == "__main__":
@@ -90,5 +123,12 @@ if __name__ == "__main__":
     P64 = sum_point(P32, P32)
     P128 = sum_point(P64, P64)
     P151 = sum_point(sum_point(sum_point(sum_point(P2, P), P4), P16), P128)
-    print(P151[0], P151[1])
-    
+    print("Точка 151P: ",P151[0], P151[1])
+
+    porder = elliptic_curve_order(p)
+    if hasse(p, porder):
+        print("Порядок эллиптической кривой: ", porder)
+    else:
+        print(porder, " не является порядком эллиптической кривой!")
+
+    print("Порядок точки P: ", point_order(P))
