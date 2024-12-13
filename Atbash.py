@@ -1,4 +1,4 @@
-def encrypt(initial):
+def encrypt(initial): #шифрование Атбашем
 
     output = ""
     alphabet = {}
@@ -7,11 +7,10 @@ def encrypt(initial):
     A = ord('А')
     Y = ord('Я')
 
-    for i in range(32):
+    for i in range(32): #Проходим по алфавиту
         alphabet[chr(a+i)] = chr(y - i)
         alphabet[chr(A+i)] = chr(Y - i)
-        print(chr(Y - i))
-        print(chr(y - i))
+    
 
     for char in initial:
         if char in alphabet:

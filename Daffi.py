@@ -1,13 +1,13 @@
 import Rabin as rab
 import random
 
-def find_primitive_root(p):
+def find_primitive_root(p): #поиск примитивного корня
   if p == 2:
     return 1  # специальный случай для p = 2
 
   phi = p - 1
   factors = []
-  # находим все простые делители phi (p - 1)
+  # находим все простые делители (p - 1)
   n = 2
   while n * n <= phi:
     if phi % n == 0:
@@ -29,7 +29,7 @@ def find_primitive_root(p):
   return None  # если не найден примитивный корень, возвращаем None
 
 
-def daffi(p):
+def daffi(p): 
     with open("exit_daffi.txt", "a", encoding="utf-8") as f:
         g = find_primitive_root(p)
         f.write(f"Примитивный элемент: {g}\n")
@@ -48,22 +48,22 @@ def daffi(p):
         if K_A != K_B:
             f.write(f"Секретные ключи не совпадают!\n")
         else: 
-            f.write(f"Общий секретный ключ успешно вычислен и совпадает.\n")    
+            f.write(f"Общий секретный ключ совпадает.\n")    
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": 
     n = 20
-    k = 5
+    k = 5 #количество итераций
 
     valid = 0
     while valid != 1:
-        p = rab.gen_p(n)
+        p = rab.gen_p(n) #генериуем нечетное число n разряда 
         b = int(rab.max_pow(p))
         m = int(rab.get_m(p,b))
         for _ in range(k):
             a = int(rab.take_a(p))
             z = pow(a, m, p)
-            valid = rab.rabin_test(p, z, b)
+            valid = rab.rabin_test(p, z, b) #метода Миллера-Рабина
             with open("exit_daffi.txt", "a", encoding="utf-8") as f:
                 f.write(f"Число: {p} ; значение a: {a}\n")
                 f.write(f"Тест {_+1}: {valid}\n")

@@ -1,7 +1,7 @@
 a, z = ord('а'), ord('я')
 A, Z = ord('А'), ord('Я')
 
-def caesar(words, shift):
+def caesar(words, shift): #Шифрование Цезаря
     text = ''
 
     for ch in words:
@@ -14,7 +14,7 @@ def caesar(words, shift):
     return text
 
 
-def gChange(ch, A, Z, shift):
+def gChange(ch, A, Z, shift): #Сдвиг
     result = dif = ord(ch) + shift
     if dif > Z:
         result = (dif - Z) % 33 - 1 + A

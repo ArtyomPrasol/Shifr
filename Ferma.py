@@ -2,14 +2,14 @@ import math
 import itertools
 
 
-def correct_root(x):
+def correct_root(x): #правильный корень
     s = int(math.sqrt(x))
     if pow(s,2) == x:
         return True
     return False
 
 
-def ferma_func(n):
+def ferma_func(n): #функция Ферма
     qn = abs(math.isqrt(n))
     x = None
     y = None
@@ -29,7 +29,9 @@ def ferma_func(n):
     return find
 
 
-n = 964758387457354683609980045464712160753368874876361319018239
-a = ferma_func(n)
+if __name__ == "__main__":
 
-print(f"Делители для {n} :\n{a[0]} ;\n{a[1]}\n")
+    n = 964758387457354683609980045464712160753368874876361319018239
+    a = ferma_func(n)
+
+    print(f"Делители для {n} :\n{a[0]} ;\n{a[1]}\n")

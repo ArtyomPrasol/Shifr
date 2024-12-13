@@ -1,7 +1,7 @@
 import Rabin as r
 import math
 
-def sum_point(P, Q, a = 1):
+def sum_point(P, Q, a = 1): # суммирование точек на эллиптической кривой
     if P is None:
         return Q
     if Q is None:
@@ -26,7 +26,7 @@ def sum_point(P, Q, a = 1):
     return x3, y3
 
 
-def find_x_and_root(y, z, delta = 500000):
+def find_x_and_root(y, z, delta = 500000): # ищем подходящее число и его квадрат
     # проверяем входные данные
     if z >= y or z < 0:
         raise ValueError("Остаток z должен быть больше или равен 0 и меньше y")
@@ -35,13 +35,13 @@ def find_x_and_root(y, z, delta = 500000):
     n = 0
     for i in range(delta):
         x = n**2  # квадрат числа n
-        if x % y == z:  # проверяем условие деления с остатком
+        if x % y == z:  
             return x, n
         n += 1  # переходим к следующему квадрату
     return -1, -1
 
 
-def rabin(p, k = 10):
+def rabin(p, k = 10): #поиск простого числа с помощью теста Миллера-Рабина
     while True: # считаем пока не найдем простое число
         b = int(r.max_pow(p))
         m = int(r.get_m(p,b))
@@ -57,16 +57,15 @@ def rabin(p, k = 10):
         p += 1
 
 
-def func_y(x,a = 1,b = 0):
+def func_y(x,a = 1,b = 0): #функция эллиптической кривой
     return x**3 + a*x + b
 
 
-def elliptic_curve_order(p, a = 1, b = 0):
-    order = 1  # начинаем с точки на бесконечности
+def elliptic_curve_order(p): #порядок эллиптической кривой
+    order = 1 
     for x in range(p):
-        rhs = (x**3 + a * x + b) % p
+        rhs = func_y(x) % p
         count = 0
-        # ищем квадратичные вычеты
         for y in range(p):
             if (y * y) % p == rhs:
                 count += 1
@@ -74,7 +73,7 @@ def elliptic_curve_order(p, a = 1, b = 0):
     return order
 
 
-def hasse(c, porder):
+def hasse(c, porder): #Проверка Хассе
     l = c + 1 - math.sqrt(c) #нижняя граница
     h = c + 1 + math.sqrt(c) #верхняя граница
 
@@ -83,11 +82,11 @@ def hasse(c, porder):
     return False
 
 
-def point_order(P):
+def point_order(P): #Поиск порядка точки
     Q = P
     k = 1 # kP = P
     while Q is not None:
-        Q = sum_point(Q, P)  # cложение точки с самой собой вместо умножения
+        Q = sum_point(Q, P)  # cложение точки самой с собой вместо умножения
         k += 1
         if Q is None: 
             return k
@@ -101,7 +100,7 @@ if __name__ == "__main__":
 
     print("Подходящее значение p: ", p)
     x = 0
-    while True:
+    while True: #ищем X и Y
         x += 1
         z = func_y(x)
         y2, y = find_x_and_root(p, z)

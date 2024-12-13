@@ -10,7 +10,7 @@ def get_m(p,b): return float(p-1)/float(2 ** b)
 def take_a(p): return random.randrange(2, int(p*0.5)-1)
 
 
-def rabin_test(p, z, b, j = 0):
+def rabin_test(p, z, b, j = 0): #тест Миллера-Рабина
     if z == 1 or z == p - 1:
         return True
     while j != b:
@@ -23,7 +23,8 @@ def rabin_test(p, z, b, j = 0):
                 return True
     return False
 
-def gen_pdb(n):
+
+def gen_pdb(n): #генерируем двухзначный код
     p = ""
     for _ in range(n):
         if _ == 0 or _ == n - 1:
@@ -46,7 +47,7 @@ def is_prime(num):
   return True
 
 
-def gen_p(n, primes = [i for i in range(2, 12) if is_prime(i)], f = 0):
+def gen_p(n, primes = [i for i in range(2, 12) if is_prime(i)], f = 0): #генерируем число (ищем первые простые числа перед этим)
     while f != 1:
         f = 1
         pt = gen_pdb(n)
@@ -58,6 +59,7 @@ def gen_p(n, primes = [i for i in range(2, 12) if is_prime(i)], f = 0):
                 f = 0
                 break
     return p
+
 
 if __name__ == "__main__":
     # генерируем n битное число
